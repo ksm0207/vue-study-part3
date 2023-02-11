@@ -6,9 +6,9 @@
     </div>
     <div class="post-body" :style="{backgroundImage : `url(${item.postImage})`}"></div>
     <div class="post-content">
-      <p>{{item.likes}}} Likes</p>
-      <p><strong>{{item.name}}</strong>{{item.content}}}</p>
-      <p class="date">{{item.date}}}</p>
+      <p>{{item.likes}} Likes</p>
+      <p><strong>{{item.name}}</strong>{{item.content}}</p>
+      <p class="date">{{item.date}}</p>
     </div>
   </div>
 
@@ -20,8 +20,9 @@ export  default  {
   data : () => ({
 
   }),
+  methods : {},
   props : {
-    instagram : Object
+    instagram : Object,
   },
 }
 

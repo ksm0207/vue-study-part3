@@ -4,18 +4,24 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li @click="this.tabIndex = 2" v-if="tabIndex == 1"> Next</li>
+      <li @click="publish()" v-if="tabIndex == 2"> 글발행</li>
     </ul>
-    <img src="../assets/logo.png" class="logo"  alt=""/>
+    <img @click="moveHome()" src="../assets/logo.png" class="logo"  alt=""/>
   </div>
 
-  <Container :instagram="this.instagram" />
-
+  <Container
+      :instagram="this.instagram"
+      :tabIndex="this.tabIndex"
+      :uploadImg="this.uploadImg"
+      @publish="publish"/>
+  <button v-if="this.tabIndex == 0" @click="getMoreData()">더보기</button>
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
-      <label for="file" class="input-plus">+</label>
+      <input @change="imageUpload"  type="file" id="file" class="inputfile" />
+      <label v-if="this.tabIndex == 0" for="file" class="input-plus">+</label>
     </ul>
+
   </div>
 </template>
 
@@ -23,12 +29,51 @@
 
 import Container from '../components/Container.vue'
 import SampleData from '../assets/datas/InstagramData'
+import axios from "axios";
 export default {
   name : 'home',
   data : () => ({
-    instagram : SampleData
-
+    instagram : SampleData,
+    btnCount : 0,
+    tabIndex : 0,
+    uploadImg : null
   }),
+  methods : {
+    async getMoreData(){
+      console.log("getMoreData Ready...")
+      await axios.get(`https://codingapple1.github.io/vue/more${this.btnCount}.json`)
+          .then((response)=>{
+            if(response !== null) {
+              this.btnCount +=1
+              // 새로운 데이터 Push
+              this.instagram.push(response.data)
+            }
+          })
+          .catch((error)=>{
+            console.log("Error : " , error);
+            alert("마지막 게시물 입니다.");
+          })
+    },
+    imageUpload : function (event){
+      console.log("Image Upload ...")
+      const image = event.target.files
+      let url = null
+      if (image.length > 0) {
+        url = URL.createObjectURL(image[0])
+        this.uploadImg = url
+        this.tabIndex ++;
+      }
+    },
+    publish : function (data){
+      let test = data
+      console.log("From Child in Data : " , test)
+    },
+    moveHome : function () {
+      console.log("move Home")
+      this.$router.go(0)
+    }
+
+  },
   components : {
     Container
   },
