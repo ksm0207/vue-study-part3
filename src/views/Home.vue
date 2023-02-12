@@ -4,8 +4,8 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li @click="this.tabIndex = 2" v-if="tabIndex == 1"> Next</li>
-      <li @click="publish()" v-if="tabIndex == 2"> 글발행</li>
+      <li @click="this.tabIndex = 2" v-if="tabIndex === 1"> Next</li>
+      <li @click="publish()" v-if="tabIndex === 2"> 글발행</li>
     </ul>
     <img @click="moveHome()" src="../assets/logo.png" class="logo"  alt=""/>
   </div>
@@ -14,12 +14,12 @@
       :instagram="this.instagram"
       :tabIndex="this.tabIndex"
       :uploadImg="this.uploadImg"
-      @publish="publish"/>
-  <button v-if="this.tabIndex == 0" @click="getMoreData()">더보기</button>
+      @write="write"/>
+  <button v-if="this.tabIndex === 0" @click="getMoreData()">더보기</button>
   <div class="footer">
     <ul class="footer-button-plus">
       <input @change="imageUpload"  type="file" id="file" class="inputfile" />
-      <label v-if="this.tabIndex == 0" for="file" class="input-plus">+</label>
+      <label v-if="this.tabIndex === 0" for="file" class="input-plus">+</label>
     </ul>
 
   </div>
@@ -36,7 +36,8 @@ export default {
     instagram : SampleData,
     btnCount : 0,
     tabIndex : 0,
-    uploadImg : null
+    uploadImg : "",
+    newContent: ""
   }),
   methods : {
     async getMoreData(){
@@ -64,9 +65,22 @@ export default {
         this.tabIndex ++;
       }
     },
-    publish : function (data){
-      let test = data
-      console.log("From Child in Data : " , test)
+    publish : function (){
+      let sendData = {
+        name: "아이언맨",
+        userImage: "https://placeimg.com/100/100/arch",
+        postImage: this.uploadImg,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: this.newContent,
+        filter: "perpetua"
+      }
+      this.instagram.unshift(sendData)
+      this.tabIndex = 0
+    },
+    write : function (data) {
+      return this.newContent = data
     },
     moveHome : function () {
       console.log("move Home")

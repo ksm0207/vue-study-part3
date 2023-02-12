@@ -1,9 +1,8 @@
 <template>
-
-  <Post v-if="this.tabIndex == 0" :instagram="this.instagram" :uploadImg="this.uploadImg" />
+  <Post v-if="this.tabIndex === 0" :instagram="this.instagram" :uploadImg="this.uploadImg" />
 
   <!-- 필터 선택 화면  -->
-  <div v-if="this.tabIndex == 1">
+  <div v-if="this.tabIndex === 1">
     <div class="upload-image" :style="{backgroundImage : `url(${this.uploadImg})`}"></div>
     <div class="filters">
       <div class="filter-1"></div>
@@ -15,12 +14,15 @@
   </div>
 
   <!-- 글 작성 화면  -->
-  <div v-if="tabIndex == 2">
+  <div v-if="tabIndex === 2">
     <div class="upload-image" :style="{backgroundImage : `url(${this.uploadImg})`}"></div>
     <div class="write">
-      <textarea class="write-box" placeholder="글 작성하기" @change="publish($event)"/>
+      <textarea class="write-box" placeholder="글 작성하기"
+                @input="$emit('write', $event.target.value)" />
     </div>
   </div>
+
+
 </template>
 <script>
 
@@ -28,21 +30,9 @@ import Post from '../components/Post.vue'
 
 export default {
   data : () =>({
-    content : null
+    newContent : null
   }),
-  methods : {
-    publish : function ($event) {
-      this.content = $event.target.value
-      if (this.content != null) {
-        let sendData = {
-          "content" : this.content ,
-          "image" : this.uploadImg
-        }
-        console.log("Child --------> Parent Send Data : " , sendData)
-        return this.$emit('publish',sendData)
-      }
-    }
-  },
+  methods : {},
   props : {
     instagram : Object,
     tabIndex : Number,
