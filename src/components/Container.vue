@@ -5,11 +5,8 @@
   <div v-if="this.tabIndex === 1">
     <div class="upload-image" :style="{backgroundImage : `url(${this.uploadImg})`}"></div>
     <div class="filters">
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
+      <FilterBox :uploadImg="this.uploadImg"
+                 :photoFilters="this.photoFilters"/>
     </div>
   </div>
 
@@ -27,19 +24,24 @@
 <script>
 
 import Post from '../components/Post.vue'
+import FilterBox from "@/components/FilterBox.vue";
 
 export default {
   data : () =>({
-    newContent : null
+    newContent : null,
+    photoFilters : [ "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson",
+      "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua",
+      "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"]
   }),
   methods : {},
   props : {
     instagram : Object,
     tabIndex : Number,
-    uploadImg : Object
+    uploadImg : String
   },
   components : {
-    Post
+    Post,
+    FilterBox
   },
   watch : {
     uploadImg () {
