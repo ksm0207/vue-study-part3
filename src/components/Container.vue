@@ -3,7 +3,7 @@
 
   <!-- 필터 선택 화면  -->
   <div v-if="this.tabIndex === 1">
-    <div class="upload-image" :style="{backgroundImage : `url(${this.uploadImg})`}"></div>
+    <div class=" upload-image" :style="{backgroundImage : `url(${this.uploadImg})`}"></div>
     <div class="filters">
       <FilterBox :uploadImg="this.uploadImg"
                  :photoFilters="this.photoFilters"/>
