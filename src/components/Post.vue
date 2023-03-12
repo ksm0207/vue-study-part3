@@ -4,7 +4,7 @@
       <div class="profile" :style="{backgroundImage : `url(${item.userImage})`} "></div>
       <span class="profile-name">{{item.name}}</span>
     </div>
-    <div class="post-body" :style="{backgroundImage : `url(${item.postImage})`}"></div>
+    <div :class="item.filter" class="post-body" :style="{backgroundImage : `url(${item.postImage})`}"></div>
     <div class="post-content">
       <p>{{item.likes}} Likes</p>
       <p><strong>{{item.name}}</strong>{{item.content}}</p>
@@ -20,10 +20,14 @@ export  default  {
   data : () => ({
 
   }),
-  methods : {},
+  methods : {
+
+  },
   props : {
     instagram : Object,
+    setApplyFilter : Object
   },
+
 }
 
 </script>

@@ -1,18 +1,21 @@
 <template>
-  <Post v-if="this.tabIndex === 0" :instagram="this.instagram" :uploadImg="this.uploadImg" />
+  <Post v-if="this.tabIndex === 0"
+        :instagram="this.instagram"
+        :uploadImg="this.uploadImg" />
 
   <!-- 필터 선택 화면  -->
   <div v-if="this.tabIndex === 1">
     <div class=" upload-image" :style="{backgroundImage : `url(${this.uploadImg})`}"></div>
     <div class="filters">
       <FilterBox :uploadImg="this.uploadImg"
-                 :photoFilters="this.photoFilters"/>
+                 :photoFilters="this.photoFilters"
+                 @setFilterName="setFilterName($event)"/>
     </div>
   </div>
 
   <!-- 글 작성 화면  -->
   <div v-if="tabIndex === 2">
-    <div class="upload-image" :style="{backgroundImage : `url(${this.uploadImg})`}"></div>
+    <div :class="this.setApplyFilter" class="upload-image" :style="{backgroundImage : `url(${this.uploadImg})`}"></div>
     <div class="write">
       <textarea class="write-box" placeholder="글 작성하기"
                 @input="$emit('write', $event.target.value)" />
@@ -31,9 +34,16 @@ export default {
     newContent : null,
     photoFilters : [ "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson",
       "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua",
-      "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"]
+      "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
+    setApplyFilter : null
   }),
-  methods : {},
+  methods : {
+    setFilterName : function (e) {
+      this.setApplyFilter = e
+      return this.$emit('getFilterOption',this.setApplyFilter)
+    }
+
+  },
   props : {
     instagram : Object,
     tabIndex : Number,

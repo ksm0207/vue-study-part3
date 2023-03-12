@@ -26,7 +26,7 @@ export default {
       const changedClass = document.getElementsByClassName("upload-image")[0]
       changedClass.className = `upload-image ${filterClass}`
       // 클래스를 파라미터를 넘겨라
-      return changedClass
+      this.$emit('setFilterName',filterClass)
     },
   },
 

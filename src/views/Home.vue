@@ -5,7 +5,7 @@
     </ul>
     <ul class="header-button-right">
       <li @click="this.tabIndex = 2" v-if="tabIndex === 1"> Next</li>
-      <li @click="publish()" v-if="tabIndex === 2"> 글발행</li>
+      <li @click="publish($event)" v-if="tabIndex === 2"> 글발행</li>
     </ul>
     <img @click="moveHome()" src="../assets/logo.png" class="logo"  alt=""/>
   </div>
@@ -14,7 +14,8 @@
       :instagram="this.instagram"
       :tabIndex="this.tabIndex"
       :uploadImg="this.uploadImg"
-      @write="write"/>
+      @write="write"
+      @getFilterOption="getFilterOption"/>
   <button v-if="this.tabIndex === 0" @click="getMoreData()">더보기</button>
   <div class="footer">
     <ul class="footer-button-plus">
@@ -37,7 +38,8 @@ export default {
     btnCount : 0,
     tabIndex : 0,
     uploadImg : "",
-    newContent: ""
+    newContent: "",
+    filterOption : ""
   }),
   methods : {
     async getMoreData(){
@@ -65,7 +67,7 @@ export default {
         this.tabIndex ++;
       }
     },
-    publish : function (){
+    publish : function (e){
       let sendData = {
         name: "아이언맨",
         userImage: "https://placeimg.com/100/100/arch",
@@ -74,7 +76,7 @@ export default {
         date: "May 15",
         liked: false,
         content: this.newContent,
-        filter: "perpetua"
+        filter: this.filterOption
       }
       this.instagram.unshift(sendData)
       this.tabIndex = 0
@@ -82,8 +84,11 @@ export default {
     write : function (data) {
       return this.newContent = data
     },
+    getFilterOption : function (data) {
+      this.filterOption = data
+    },
+
     moveHome : function () {
-      console.log("move Home")
       this.$router.go(0)
     }
 
