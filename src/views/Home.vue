@@ -1,4 +1,6 @@
 <template>
+  <h4>안녕하세요? {{ $store.state.name }} </h4>
+  <button @click="changedName()">이름을 연서로 바꿀래요.</button>
   <div class="header">
     <ul class="header-button-left">
       <li>Cancel</li>
@@ -31,6 +33,7 @@
 import Container from '../components/Container.vue'
 import SampleData from '../assets/datas/InstagramData'
 import axios from "axios";
+
 export default {
   name : 'home',
   data : () => ({
@@ -43,7 +46,6 @@ export default {
   }),
   methods : {
     async getMoreData(){
-      console.log("getMoreData Ready...")
       await axios.get(`https://codingapple1.github.io/vue/more${this.btnCount}.json`)
           .then((response)=>{
             if(response !== null) {
@@ -87,9 +89,11 @@ export default {
     getFilterOption : function (data) {
       this.filterOption = data
     },
-
     moveHome : function () {
       this.$router.go(0)
+    },
+    changedName : function () {
+      this.$store.state.name = "NamYeonSeo"
     }
 
   },
